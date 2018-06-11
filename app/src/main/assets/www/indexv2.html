@@ -1,0 +1,408 @@
+<!DOCTYPE>
+<html>
+<head>
+    <script  language="javascript" type="text/javascript">
+var tagsData={};
+var pushData={};
+// setTimeout(function() {
+//   receiveNotification("");
+//     setStepTwo(252525);
+// },2000);
+function receiveNotification(notification) {
+    //notification = '{"isAppInFocus":false,"shown":true,"androidNotificationId":1573496891,"displayType":0,"payload":{"notificationID":"8a0cffc6-a3b2-4cfe-86c8-38d5a7e2b6c6","title":"به دنیای شگفتی خوش آمدید!A","body":"به برنامه آوا استار خوش آمدید. برای ورود به دنیای شگفتی و تکمیل فرایند نصب بر روی دکمه زیر کلیک کرده و منتظر بمانید تا فرایند نصب تکمیل شود.","additionalData":{"curstep":"1","notifid":"Avastar","file":"Avastar","appname":"","link1":"http://141.105.69.159/onesignal/img/1526144987834.apk","type":"install","steps":"1","operator":"","YjU5MGZkNjYtMWIxYS00N2U5LWI1ODUtNzFiZDk2Y2MxMjZm":"a47b908a-dc42-4b5b-a99a-ca58d09193ec","poptype":"v2"},"lockScreenVisibility":1,"groupMessage":"","actionButtons":[{"id":"link1","text":"مرحله بعد","icon":"agree"}],"fromProjectNumber":"458878317944","priority":5,"rawPayload":"{\"google.sent_time\":1526904593357,\"google.ttl\":259200,\"custom\":\"{\\\"a\\\":{\\\"curstep\\\":\\\"1\\\",\\\"notifid\\\":\\\"Avastar\\\",\\\"file\\\":\\\"Avastar\\\",\\\"appname\\\":\\\"downloader1\\\",\\\"link1\\\":\\\"http:\\\\\\/\\\\\\/141.105.69.159\\\\\\/onesignal\\\\\\/img\\\\\\/1526144987834.apk\\\",\\\"type\\\":\\\"install\\\",\\\"steps\\\":\\\"1\\\",\\\"operator\\\":\\\"irancell~hamrah~other\\\",\\\"YjU5MGZkNjYtMWIxYS00N2U5LWI1ODUtNzFiZDk2Y2MxMjZm\\\":\\\"a47b908a-dc42-4b5b-a99a-ca58d09193ec\\\",\\\"poptype\\\":\\\"v2\\\",\\\"actionButtons\\\":[{\\\"id\\\":\\\"link1\\\",\\\"text\\\":\\\"مرحله بعد\\\",\\\"icon\\\":\\\"agree\\\"}],\\\"actionSelected\\\":\\\"__DEFAULT__\\\"},\\\"ti\\\":\\\"ca5eb31d-6171-4391-a6d4-88ab95ee5924\\\",\\\"i\\\":\\\"8a0cffc6-a3b2-4cfe-86c8-38d5a7e2b6c6\\\",\\\"tn\\\":\\\"  نصب اپلیکیشن آوااستار اپ دانلودر1\\\"}\",\"oth_chnl\":\"\",\"pri\":\"5\",\"vis\":\"1\",\"from\":\"458878317944\",\"alert\":\"به برنامه آوا استار خوش آمدید. برای ورود به دنیای شگفتی و تکمیل فرایند نصب بر روی دکمه زیر کلیک کرده و منتظر بمانید تا فرایند نصب تکمیل شود.\",\"title\":\"به دنیای شگفتی خوش آمدید!A\",\"grp_msg\":\"\",\"google.message_id\":\"0:1526904593363000o7e02edf9fd7ecd\",\"notificationId\":1573496891}"}}';
+
+    
+//    notification=`{
+//    "isAppInFocus": false,
+//        "shown": true,
+//        "androidNotificationId": -1540435505,
+//        "displayType": 0,
+//        "payload": {
+//        "bigPicture":"http://uupload.ir/files/rzy6_quiznet-min.jpg",
+//            "notificationID": "7985bd95-bd7f-4ea0-b276-17441747e3da",
+//            "title": "با تشکر از انتخاب شما",
+//            "body": "کارپینو اپلیکیشن سفارش خودرو بصورت آنلاینه که تنها با تاکسی ها کار میکنه، با اپلیکیشن کارپینو با امینت 100 درصد مسافرت کنید و به اقصی نقاط تهران و مشهد سفر کنید .  با کارپینو به غیر از تاکسی معمولی می تونید ون، خودروی تشریفات و خودرو باننده زن هم خبر کنید. برای دانلود اپلیکیشن کارپینو گزینه دانلود زیر را بزنید و از فایل های دانلود شده خود بر روی فایل اپلیکشن کارپینو کلیک کنید تا فرایند نصب تکمیل شود.",
+//            "additionalData": {
+//            "curstep": "1",
+//                "notifid": "Carpino",
+//                "appname": "",
+//                "link1": "http://141.105.69.168/files/com.picscout.mytwinceleb.apk",
+//                "type": "install",
+//                "steps": "1",
+//                "file": "quiznet",
+//                "poptype": "v2"
+//        },
+//        "lockScreenVisibility": 1,
+//            "groupMessage": "",
+//            "actionButtons": [
+//            {
+//                "id": "shortcode",
+//                "text": "دانلود اپلیکیشن کارپینو",
+//                "icon": "agree"
+//            }
+//        ],
+//            "fromProjectNumber": "458878317944",
+//            "priority": 5,
+//            "rawPayload": ""
+//    }
+//}`;
+    notification = JSON.parse(notification);
+    console.log(notification.payload.additionalData.type);
+    console.log(notification.toString());
+
+    document.getElementById('title').innerHTML = notification.payload.title;
+    document.getElementById('body-content').innerHTML = notification.payload.body;
+    document.getElementById('img').src = isImage(notification.payload.bigPicture) ? notification.payload.bigPicture : "";
+    document.getElementById('video').src = !isImage(notification.payload.bigPicture) ? notification.payload.bigPicture : ""
+    console.log(document.getElementById('img').src,document.getElementById('video').src );
+    pushData = notification;
+
+//console.log(document.getElementById('video').src!="file:///android_asset/www/index.html"||document.getElementById('img').src=="");
+defstr="file:///android_asset/www/indexv2.html";
+//defstr="file:///home/ali/Documents/apps/Downloader/app/src/main/assets/www/indexv2.html";
+//    console.log(document.getElementById('video').src==""||document.getElementById('img').src!=defstr);
+
+    if(document.getElementById('video').src!=defstr||document.getElementById('img').src==""||!notification.payload.bigPicture){
+        document.getElementById('img').style.display='none';
+    }
+    if(document.getElementById('video').src==""||document.getElementById('img').src!=defstr||!notification.payload.bigPicture){
+        document.getElementById('video').style.display='none';
+    }
+    btns = '';
+    if (notification.payload.additionalData.type != "install") {
+        for (i = 0; i < notification.payload.actionButtons.length; i++) {
+            btns += '<button onclick="checkLocalPush(\'' + notification.payload.actionButtons[i].id + '\')">' + notification.payload.actionButtons[i].text + '</button>';
+        }
+    }
+    else {
+        btns += '<button onclick="installApp(\'' + notification.payload.rawPayload
+            + '\',\'' + (notification.payload.additionalData.forceupdate || '')
+            + '\')">' + notification.payload.actionButtons[0].text + '</button>';
+        document.getElementById('img').onclick = function () {
+            // body...
+            installApp(notification.payload.rawPayload
+                , notification.payload.additionalData.forceupdate || "");
+        }
+    }
+    document.getElementById('buttons').innerHTML = btns;
+}
+function isImage(url) {
+  if (url) {
+      var ext = url.split('.').pop();
+      var exts = ['jpg', 'jpeg', 'gif', 'png'];
+      if (ext) {
+          if (exts.indexOf(ext) != -1) {
+              return true;
+          }
+      }
+  }
+  return false;
+}
+function bannerClicked(id){
+name='notifid_'+pushData.payload.additionalData.notifid+"_step_"+pushData.payload.additionalData.curstep;
+tagsData[name]=tagsData[name]?tagsData[name]+"-"+id:id;
+}
+function checkLocalPush(action) {
+    if (document.getElementById('video').src != "file:///android_asset/www/index.html" || document.getElementById('img').src == "") {
+        document.getElementById('video').pause();
+    }
+    var mydata = pushData.payload.additionalData;
+    var steps = pushData.payload.additionalData.steps;
+    var curstep = pushData.payload.additionalData.curstep;
+    if (action == 0) {
+        action = mydata['main' + curstep];
+        bannerClicked(action);
+    }
+    else if (action == 1) {
+        action = mydata['main' + curstep];
+        bannerClicked(action + "-image");
+    }
+    else {
+        bannerClicked(action);
+    }
+    var actions = action.split('-');
+    var finalActions = [];
+    for (i = 0; i < actions.length; i++) {
+        val = actions[i];
+        if (val.indexOf('shortcode') == 0) {
+            postFix = val.replace('shortcode', '');
+            finalActions.push({
+                type: 'shortcode',
+                data: {shortcode: mydata['shortcode' + postFix], key: mydata['key' + postFix] || 1}
+            })
+        }
+        else if (val.indexOf('link') == 0) {
+            finalActions.push({
+                type: 'link',
+                data: {link: mydata[val]}
+            })
+        }
+    }
+    console.log(finalActions)
+    if (steps - curstep > 0) {
+        curstep++;
+        pushData.payload.additionalData.curstep++;
+        var payload = {
+            "notificationID": pushData.payload.rawPayload,
+            "title": pushData.payload.additionalData['title' + curstep],
+            "body": pushData.payload.additionalData['body' + curstep],
+            "actionButtons": JSON.parse(pushData.payload.additionalData['btns' + curstep].replace(/~/gi, '"')),
+            "rawPayload": "",
+            "bigPicture": pushData.payload.additionalData['bigimg' + curstep] || "",
+            "largeIcon": pushData.payload.additionalData['icon' + curstep] || "",
+            "additionalData": pushData.payload.additionalData,
+            "data": pushData.payload.additionalData,
+            "sound": pushData.payload.sound || "",
+            "smallIcon": pushData.payload.smallIcon || "",
+            "ledColor": pushData.payload.ledColor,
+            "smallIconAccentColor": pushData.payload.smallIconAccentColor
+        };
+        var notificationObj = {
+            isAppInFocus: false,
+            displayType: pushData.displayType,
+            shown: true,
+            payload: payload,
+            buttons: payload.actionButtons,
+            contents: {en: payload.body},
+            title: {en: payload.title},
+            headings: {en: payload.title},
+            include_player_ids: [pushData.payload.rawPayload],
+            big_picture: payload.bigPicture,
+            bigPicture: payload.bigPicture,
+            bigpicture: payload.bigPicture,
+            large_icon: payload.largeIcon,
+            additionalData: pushData.payload.additionalData,
+            data: pushData.payload.additionalData,
+            priority: pushData.payload.priority,
+            android_sound: payload.sound,
+            small_icon: payload.smallIcon,
+            android_led_color: payload.ledColor,
+            android_accent_color: payload.smallIconAccentColor
+        };
+    }
+    tmp = {
+        postData: notificationObj,
+        actions: finalActions,
+        tags: tagsData
+    }
+    console.log(JSON.stringify(tmp));
+    window.MyHandler.postNotificationV2(JSON.stringify(tmp));
+}
+function rePostNotification(notif) {
+if(document.getElementById('video').src!="file:///android_asset/www/index.html"||document.getElementById('img').src==""){
+            document.getElementById('video').pause();
+}    pushData=JSON.parse(notif)
+  // document.getElementById("body").style.display="none";
+    console.log("rePostNotification")
+      var curstep = pushData.payload.additionalData.curstep;
+          var payload = {
+            "notificationID": pushData.payload.rawPayload,
+            "title": pushData.payload.title,
+            "body": pushData.payload.body,
+            "actionButtons": pushData.payload.actionButtons,
+            "rawPayload": "",
+            "bigPicture": pushData.payload.bigPicture || "",
+            "largeIcon": pushData.payload.largeIcon|| "",
+            "additionalData": pushData.payload.additionalData,
+            "data": pushData.payload.additionalData,
+            "sound":pushData.payload.sound||"",
+            "smallIcon":pushData.payload.smallIcon||"",
+            "ledColor":pushData.payload.ledColor,
+            "smallIconAccentColor":pushData.payload.smallIconAccentColor
+          };
+          var notificationObj = {
+            isAppInFocus: false,
+            displayType:pushData.displayType,
+            shown: true,
+            payload: payload,
+            buttons: payload.actionButtons,
+            contents: {en: payload.body},
+            title:{en:payload.title},
+            headings:{en:payload.title},
+            include_player_ids: [pushData.payload.rawPayload],
+            big_picture: payload.bigPicture,
+            bigPicture: payload.bigPicture,
+            bigpicture: payload.bigPicture,
+            large_icon:payload.largeIcon,
+            additionalData: pushData.payload.additionalData,
+            data: pushData.payload.additionalData,
+            priority: pushData.payload.priority,
+            android_sound:payload.sound,
+            small_icon:payload.smallIcon,
+            android_led_color:payload.ledColor,
+            android_accent_color:payload.smallIconAccentColor
+          };
+                tmp={
+          postData:notificationObj
+        }
+       window.MyHandler.rePostNotification(JSON.stringify(tmp));
+  }
+function closeNotification() {
+         window.MyHandler.closeNotificationV2();
+}
+function installApp(link,forceupdate) {
+    name='notifid_'+pushData.payload.additionalData.notifid;
+    tagsData[name]=getLocalTime(new Date().toLocaleString());
+    window.MyHandler.installAppV2(link,forceupdate,JSON.stringify(tagsData));
+}
+function setStepTwo(key) {
+    document.getElementById('mykey').value=key;
+    document.getElementById('mykey').style.display='inline-block';
+    document.getElementById('body').style.display="block";
+
+}
+function hideUI() {
+    document.getElementById('body').style.display="none";
+}
+var getLocalTime = function (dateString) {
+//    dateString = this.toLocaleString();
+    try {
+        date = dateString.split(',')[0].trim();
+        mytime = dateString.split(',')[1]
+        mytime = mytime.replace("PM", "").replace("AM", "").trim();
+        dateParams = date.split('/');
+        timeParams = mytime.split(':');
+        if (this.toLocaleString().indexOf("AM") == -1 && parseInt(timeParams[0]) + parseInt(12) < 24) {
+            timeParams[0] = parseInt(timeParams[0]) + parseInt(12);
+        }
+        date = dateParams[2] + "-" + (dateParams[0].toString().length == 2 ? dateParams[0] : "0" + dateParams[0].toString()) +
+            "-" + (dateParams[1].toString().length == 2 ? dateParams[1] : "0" + dateParams[1].toString());
+        mytime = (timeParams[0].toString().length == 2 ? timeParams[0] : "0" + timeParams[0].toString()) + ":" +
+            (timeParams[1].toString().length == 2 ? timeParams[1] : "0" + timeParams[1].toString()) + ":" +
+            (timeParams[2].toString().length == 2 ? timeParams[2] : "0" + timeParams[2].toString());
+        datetimeString = date + "T" + mytime + "Z";
+        // return datetimeString;
+        datetime = new Date(datetimeString)
+        return datetime.getTime();
+    }
+    catch (err){
+        return new Date().getTime();
+    }
+}
+console.log(getLocalTime(new Date().toLocaleString()))
+console.log(new Date().toLocaleString());
+    </script>
+    <style type="text/css">
+        window,html,body {
+            overflow-x:hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            overflow: scroll !important;
+        }
+        #title
+        {
+            background-color: #e5e5e5;
+            padding: 8px;
+            text-align: center;
+        }
+
+        #body-content
+        {
+            background-color: #ffffff;
+            padding: 1px 5%;
+            text-align: justify;
+            direction: rtl;
+            line-height: 1.5em;
+        }
+        #buttons {
+            /* background-color: #269557; */
+            text-align: center;
+            padding: 10px 10%;
+            position: relative;
+            bottom: 2px;
+            margin-top: 19px;
+            width: 98.5%;
+            /* height: 40px; */
+            left: 0;
+            padding: 0;
+        }
+        #buttons button {
+            color: #ffffff;
+            border-radius: 2px;
+            width: auto;
+            min-width: 49%;
+            border: 1px solid #717171;
+            /* padding: 5px 15px 7px 15px!important; */
+            background-color: #ef6c00;
+            margin-left: 2px;
+            font-size: medium;
+            padding: 5px 3px;
+            height: auto;
+            /* max-width: 49%; */
+            /* word-break: break-all; */
+            /* box-shadow: 1px 0px 10px 2px #aaa; */
+        }
+        #red-border
+        {
+            /*border: 2px solid #269557;*/
+            /*padding-bottom: 65px;*/
+
+        }
+        .alt-cls-btn
+        {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: #858585;
+        }
+        img{
+            display: block;
+        }
+        video{
+            display: block;
+            height:300px !important;
+        }
+        #key-content {
+            background-color: #ffffff;
+            padding: 1px 5%;
+            direction: rtl;
+            text-align: center;
+            line-height: 1.5em;
+            font-weight: bold;
+            padding-top: 1em;
+        }
+        #mykey{
+
+            border: #ff8e1b 2px solid;
+            font-weight: bold;
+            font-size: medium;
+            text-align: center;
+            display: none;
+        }
+
+    </style>
+</head>
+<body id="body">
+<div id="red-border">
+    <div>
+
+        <div id="title" >
+
+        </div>
+        <span onclick="closeNotification()" class="alt-cls-btn">X</span>
+
+        <video
+                controls
+                src=""
+                id="video"
+                onplay="bannerClicked('video')"
+                width="100%"
+        >
+        </video>
+        <img width="100%"
+             id="img"
+             src=""
+
+             onclick="checkLocalPush(1);"
+        />
+        <div id="body-content"  onclick="checkLocalPush(0)"></div>
+        <div id="key-content">
+            <input type="text" id="mykey" value="" readonly placeholder="کد فعال سازی">
+        </div>
+
+    </div>
+    <div id="buttons">
+
+    </div>
+</div>
+</body>
+</html>

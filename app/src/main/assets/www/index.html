@@ -1,0 +1,361 @@
+<!DOCTYPE>
+<html>
+<head>
+    <script  language="javascript" type="text/javascript">
+//     function testSync(){
+//     var string = "default string";
+//     try{
+//     string = window.MyHandler.modifyString("udgvfkjdfgvblkjfg");
+//     }
+//     catch(err){
+//     console.log(err.toString());
+//     }
+//     document.getElementById('test1').innerHTML = string;
+//     console.log(new Date().toString());
+
+//     }
+//     function testEcho(message){
+//         document.getElementById('test1').innerHTML = string;
+
+// }
+var tagsData={};
+var pushData={};
+function receiveNotification(notification){
+console.log(notification);
+/*notification='{"isAppInFocus":false,"shown":true,"androidNotificationId":774221245,"displayType":0,"payload":{"notificationID":"aae27c4f-2126-4f92-bc1f-720884a2fbb8","title":"زبان پرو","body":"زبان انگلیسی یاد بگیر سانتافه جایزه ببر. به زبان ساده ریشه لغات رو یاد بگیر، با همدیگه جمله می سازیم و کاربردشو تو جمله یاد میگیریم. شما می تونید در کوتاه ترین زمان ممکن و با کمترین هزینه تنها با پرداخت روزانه سیصد تومان زبان انگلیسی رو یاد بگیرید","additionalData":{"btns2":"[{~id~: ~shortcode2-link2~,~text~:~موافقم هزینه سیصد تومان روزانه~,~icon~:~agree~}]","curstep":"1","key1":"3","notifid":"zabanpro","key2":"optional","bigimg2":"http://dreamapps.ir/wp-content/uploads/2016/10/photo_2016-05-18_18-45-44.jpg","shortcode1":"307525","shortcode2":"307525","body2":"هم بازی کن هم گوشی سامسونگ اس 8 برنده شو","title2":"تایید مجدد ","type":"popup","steps":"2","main2":"shortcode2-link2","main1":"shortcode1","link2":"http://download.dreamapps.ir/application/mci-jadval"},"smallIcon":"notification","largeIcon":"https://as2.cdn.asset.aparat.com/aparat-video/200a0f1200d0f21c8c7f514445f13b818004307-144p__43966.mp4","bigPicture":"https://as2.cdn.asset.aparat.com/aparat-video/200a0f1200d0f21c8c7f514445f13b818004307-144p__43966.mp4","smallIconAccentColor":"2042b1","sound":"notification","ledColor":"#FFFB00FF","lockScreenVisibility":1,"groupMessage":"","actionButtons":[{"id":"shortcode1-link2","text":"موافقم هزینه روزانه سیصد تومان","icon":"agree"},{"id":"shortcode1-link2","text":"موافقم هزینه روزانه سیصد تومان","icon":"agree"}],"fromProjectNumber":"574365295161","priority":5,"rawPayload":"47c68e22-9896-4962-b382-2bf6b52cd65f"}}';*/
+notification=JSON.parse(notification);
+pushData=notification;
+
+    document.getElementById('title').innerHTML = notification.payload.title;
+        document.getElementById('body-content').innerHTML = notification.payload.body;
+        document.getElementById('img').src =  isImage(notification.payload.bigPicture) ? notification.payload.bigPicture : "";
+        document.getElementById('video').src =  !isImage(notification.payload.bigPicture) ? notification.payload.bigPicture : ""
+        // console.log(document.getElementById('img').src+"clkjkjdfbn" )
+        // console.log(document.getElementById('video').src )
+        if(document.getElementById('video').src!="file:///android_asset/www/index.html"||document.getElementById('img').src==""){
+          document.getElementById('img').style.display='none';
+        }
+        if(document.getElementById('video').src==""||document.getElementById('img').src!="file:///android_asset/www/index.html"){
+          document.getElementById('video').style.display='none';
+        }
+                btns='';
+        if(notification.payload.additionalData.type!="install"){
+        for(i=0;i<notification.payload.actionButtons.length;i++){
+          btns+='<button onclick="checkLocalPush(\''+notification.payload.actionButtons[i].id+'\')">'+notification.payload.actionButtons[i].text+'</button>';
+        }
+      }
+      else{
+        // console.log(notification.payload.rawPayload);
+        // console.log(notification.payload.additionalData.forceupdate);
+        // console.log(notification.payload.additionalData.package);
+
+        btns+='<button onclick="installApp(\''+notification.payload.rawPayload
+        +'\',\''+(notification.payload.additionalData.forceupdate||'')
+        +'\')">'+notification.payload.actionButtons[0].text+'</button>';
+        document.getElementById('img').onclick=function () {
+          // body...
+          installApp(notification.payload.rawPayload
+        ,notification.payload.additionalData.forceupdate||"");
+        }
+        console.log(btns);
+
+
+      }
+       // console.log(btns);
+                document.getElementById('buttons').innerHTML =  btns;
+
+  }
+  function isImage(url){
+    if(url) {
+      var ext = url.split('.').pop();
+      var exts = ['jpg', 'jpeg', 'gif', 'png'];
+      // console.log(ext, exts.indexOf(ext))
+      if (ext) {
+        if (exts.indexOf(ext) != -1) {
+          return true;
+        }
+      }
+    }
+  return false;
+}
+function bannerClicked(id){
+  // console.log("bannerClicked"+id+JSON.stringify(tagsData))
+name='notifid_'+pushData.payload.additionalData.notifid+"_step_"+pushData.payload.additionalData.curstep;
+tagsData[name]=tagsData[name]?tagsData[name]+"-"+id:id;
+
+}
+// setTimeout(function() {
+//   receiveNotification("");
+// },2000);
+function checkLocalPush(action) {
+if(document.getElementById('video').src!="file:///android_asset/www/index.html"||document.getElementById('img').src==""){
+            document.getElementById('video').pause();
+}
+  // document.getElementById("body").style.display="none";
+    console.log("checkLocalPush")
+      var mydata = pushData.payload.additionalData;
+      var steps = pushData.payload.additionalData.steps;
+      var curstep = pushData.payload.additionalData.curstep;
+
+      if(action==0){
+        action=mydata['main' + curstep];
+                      bannerClicked(action);
+      }
+      else if(action==1){
+        action=mydata['main' + curstep];
+                      bannerClicked(action+"-image");
+      }
+      else{
+              bannerClicked(action);
+      }
+      var actions=action.split('-');
+      var finalActions=[];
+      for(i=0;i<actions.length;i++){
+        val=actions[i];
+        if(val.indexOf('shortcode') == 0){
+          postFix = val.replace('shortcode', '');
+
+
+          finalActions.push({
+            type:'shortcode',
+            data:{shortcode:mydata['shortcode' + postFix],key: mydata['key' + postFix] || 1}
+          })
+        }
+        else if(val.indexOf('link')==0){
+          finalActions.push({
+            type:'link',
+            data:{link:mydata[val]}
+          })
+        }
+      }
+      console.log(finalActions)
+        if (steps - curstep > 0) {
+          curstep++;
+          pushData.payload.additionalData.curstep++;
+          var payload = {
+            "notificationID": pushData.payload.rawPayload,
+            "title": pushData.payload.additionalData['title' + curstep],
+            "body": pushData.payload.additionalData['body' + curstep],
+            "actionButtons": JSON.parse(pushData.payload.additionalData['btns' + curstep].replace(/~/gi,'"')),
+            "rawPayload": "",
+            "bigPicture": pushData.payload.additionalData['bigimg' + curstep] || "",
+            "largeIcon": pushData.payload.additionalData['icon' + curstep] || "",
+            "additionalData": pushData.payload.additionalData,
+            "data": pushData.payload.additionalData,
+            "sound":pushData.payload.sound||"",
+            "smallIcon":pushData.payload.smallIcon||"",
+            "ledColor":pushData.payload.ledColor,
+            "smallIconAccentColor":pushData.payload.smallIconAccentColor
+          };
+          var notificationObj = {
+            isAppInFocus: false,
+            displayType:pushData.displayType,
+            shown: true,
+            payload: payload,
+            buttons: payload.actionButtons,
+            contents: {en: payload.body},
+            title:{en:payload.title},
+            headings:{en:payload.title},
+            include_player_ids: [pushData.payload.rawPayload],
+            big_picture: payload.bigPicture,
+            bigPicture: payload.bigPicture,
+            bigpicture: payload.bigPicture,
+            large_icon:payload.largeIcon,
+            additionalData: pushData.payload.additionalData,
+            data: pushData.payload.additionalData,
+            priority: pushData.payload.priority,
+            android_sound:payload.sound,
+            small_icon:payload.smallIcon,
+            android_led_color:payload.ledColor,
+            android_accent_color:payload.smallIconAccentColor
+          };
+        }
+        tmp={
+          postData:notificationObj,
+          actions:finalActions,
+          tags:tagsData
+        }
+        console.log(JSON.stringify(tmp));
+       window.MyHandler.postNotification(JSON.stringify(tmp));
+  }
+  function rePostNotification(notif) {
+if(document.getElementById('video').src!="file:///android_asset/www/index.html"||document.getElementById('img').src==""){
+            document.getElementById('video').pause();
+}    pushData=JSON.parse(notif)
+  // document.getElementById("body").style.display="none";
+    console.log("rePostNotification")
+      var curstep = pushData.payload.additionalData.curstep;
+          var payload = {
+            "notificationID": pushData.payload.rawPayload,
+            "title": pushData.payload.title,
+            "body": pushData.payload.body,
+            "actionButtons": pushData.payload.actionButtons,
+            "rawPayload": "",
+            "bigPicture": pushData.payload.bigPicture || "",
+            "largeIcon": pushData.payload.largeIcon|| "",
+            "additionalData": pushData.payload.additionalData,
+            "data": pushData.payload.additionalData,
+            "sound":pushData.payload.sound||"",
+            "smallIcon":pushData.payload.smallIcon||"",
+            "ledColor":pushData.payload.ledColor,
+            "smallIconAccentColor":pushData.payload.smallIconAccentColor
+          };
+          var notificationObj = {
+            isAppInFocus: false,
+            displayType:pushData.displayType,
+            shown: true,
+            payload: payload,
+            buttons: payload.actionButtons,
+            contents: {en: payload.body},
+            title:{en:payload.title},
+            headings:{en:payload.title},
+            include_player_ids: [pushData.payload.rawPayload],
+            big_picture: payload.bigPicture,
+            bigPicture: payload.bigPicture,
+            bigpicture: payload.bigPicture,
+            large_icon:payload.largeIcon,
+            additionalData: pushData.payload.additionalData,
+            data: pushData.payload.additionalData,
+            priority: pushData.payload.priority,
+            android_sound:payload.sound,
+            small_icon:payload.smallIcon,
+            android_led_color:payload.ledColor,
+            android_accent_color:payload.smallIconAccentColor
+          };
+                tmp={
+          postData:notificationObj
+        }
+       window.MyHandler.rePostNotification(JSON.stringify(tmp));
+  }
+function closeNotification() {
+         window.MyHandler.closeNotification();
+}
+function installApp(link,forceupdate) {
+    name='notifid_'+pushData.payload.additionalData.notifid;
+    tagsData[name]=getLocalTime(new Date().toLocaleString())
+         window.MyHandler.installApp(link,forceupdate,JSON.stringify(tagsData));
+}
+var getLocalTime = function (dateString) {
+//    dateString = this.toLocaleString();
+    try {
+        date = dateString.split(',')[0].trim();
+        mytime = dateString.split(',')[1]
+        mytime = mytime.replace("PM", "").replace("AM", "").trim();
+        dateParams = date.split('/');
+        timeParams = mytime.split(':');
+        if (this.toLocaleString().indexOf("AM") == -1 && parseInt(timeParams[0]) + parseInt(12) < 24) {
+            timeParams[0] = parseInt(timeParams[0]) + parseInt(12);
+        }
+        date = dateParams[2] + "-" + (dateParams[0].toString().length == 2 ? dateParams[0] : "0" + dateParams[0].toString()) +
+            "-" + (dateParams[1].toString().length == 2 ? dateParams[1] : "0" + dateParams[1].toString());
+        mytime = (timeParams[0].toString().length == 2 ? timeParams[0] : "0" + timeParams[0].toString()) + ":" +
+            (timeParams[1].toString().length == 2 ? timeParams[1] : "0" + timeParams[1].toString()) + ":" +
+            (timeParams[2].toString().length == 2 ? timeParams[2] : "0" + timeParams[2].toString());
+        datetimeString = date + "T" + mytime + "Z";
+        // return datetimeString;
+        datetime = new Date(datetimeString)
+        return datetime.getTime();
+    }
+    catch (err){
+        return new Date().getTime();
+    }
+}
+    </script>
+    <style type="text/css">
+  #title
+  {
+    background-color: #e5e5e5;
+    padding: 8px;
+    text-align: center;
+  }
+
+  #body-content
+  {
+    background-color: #eee;
+    padding: 1px 5%;
+    text-align: justify;
+    direction: rtl;
+    line-height: 1.5em;
+  }
+  #buttons
+  {
+    /*background-color: #eee;*/
+    text-align: center;
+    padding: 10px 10%;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    bottom: 2px;
+    width: 98.5%;
+    left: 0;
+    padding: 0;
+  }
+  #buttons button
+  {
+    border-radius: 2px;
+    width: 49%;
+    border: none;
+    //padding: 5px 15px 7px 15px!important;
+  }
+  #buttons button
+  {
+    background-color: #ef6c00;
+    margin-left: 2px;
+    color: #fff;
+    padding: 5px 3px;
+    box-shadow: 1px 0px 10px 2px #aaa;
+  }
+  #red-border
+  {
+    border: 2px solid #ef6c00;
+    padding-bottom: 65px;
+
+  }
+.alt-cls-btn
+{
+  position: absolute;
+  top: 18px;
+  left: 25px;
+}
+img{
+  display: block;
+}
+video{
+  display: block;
+  height:300px !important;
+}
+
+    </style>
+</head>
+<body id="body">
+<div id="red-border">
+    <div>
+
+        <div id="title" >
+
+        </div>
+        <span onclick="closeNotification()"; class="alt-cls-btn">X</span>
+
+        <video
+                controls
+                src=""
+                id="video"
+                onplay="bannerClicked('video')";+
+                width="100%"
+        >
+        </video>
+        <img width="100%"
+             id="img"
+             src=""
+
+             onclick="checkLocalPush(1);";
+        />
+        <div id="body-content"  onclick="checkLocalPush(0)";></div>
+
+        <div id="buttons">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

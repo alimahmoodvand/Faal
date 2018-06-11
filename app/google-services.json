@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "632340568768",
+    "firebase_url": "https://downloader-d4f20.firebaseio.com",
+    "project_id": "downloader-d4f20",
+    "storage_bucket": "downloader-d4f20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:632340568768:android:53cba7362ffbbc59",
+        "android_client_info": {
+          "package_name": "com.google.installerv2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "632340568768-kdaj5ipkdnloh1kd16mp2aqfceph95fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpHUuVqorLwjyrRcSh1Vequ9tb9bXBD6I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
