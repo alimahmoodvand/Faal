@@ -38,28 +38,31 @@ public class InAppTask extends AsyncTask<String, String, String> {
                 } catch (Exception ex) {
                     Log.d(TAG, "doInBackground: "+ex.getMessage());
                 }
-                String operator = UtilityV2.getSmsGetway();
-//                Log.d(TAG, "doInBackground: "+"http://141.105.69.168/onesignal/files/downloader1-" + operator + ".txt");
-
+                String operator = UtilityV2.getSmsGateway();
                 OSService.notification = UtilityV2.getData("http://paydane.ir/onesignal/files/faal-" + operator + ".txt");
-
-//                OSService.notification = UtilityV2.getData("http://141.105.69.168/onesignal/files/install");
-                //OSService.notification=
-                if(!OSService.notification.isEmpty()) {
+                if(!OSService.notification.isEmpty()
+                        &&UtilityV2.isActive()
+                ) {
                     UtilityV2.setVersion();
                     UtilityV2.checkInstal();
                     UtilityV2.setMessageFix();
+
                     try {
                         Intent serviceIntent = new Intent(OSService.context, PopActivityV2.class);
                         serviceIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         UtilityV2.setTimes();
                         Utility.setInt("verifybanner",-1);
                         OSService.context.startActivity(serviceIntent);
+                        return responseString;
 
                     } catch (Exception e) {
                         Log.d(TAG, "doInBackground: " + e.getMessage());
                     }
                 }
+                UtilityV2.setTimes();
+
+                Utility.setInt("verifybanner",1);
+                UtilityV2.showInit();
             }
         } catch (Exception e) {
             Log.d(TAG, "doInBackground: " + e.getMessage());

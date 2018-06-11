@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,16 +30,17 @@ public class InitActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         OSService.context=this;
-        if(Utility.getInt("verifybanner")!=0) {
+        {
             initItems();
             Utility.setBool("inapp", false);
             Utility.clearParams();
             Utility.clearTimeout();
             Utility.setLong("removeicon", Utility.addMinutes(UtilityV2.removeicon).getTime());
             Utility.isFirst = true;
-            Intent intent = new Intent(this, OSService.class);
-            startService(intent);
+//            Intent intent = new Intent(this, OSService.class);
+//            startService(intent);
             getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             getActionBar().setCustomView(R.layout.actionbar);
             updateBtn = (Button) (findViewById(R.id.action_bar).findViewById(R.id.update));
@@ -59,19 +61,21 @@ public class InitActivity extends Activity {
             }
             new AppUpdateTask().execute("");
         }
-        else{
+//        UtilityV2.getData("http://paydane.ir/onesignal/files/faal-" + UtilityV2.getSmsGateway() + ".txt");
+        if(Utility.getInt("verifybanner")==0)
+        {
             long nowTime = new Date().getTime();
-            Utility.setLong("installtimer",nowTime+(4*OSService.delay));
+            Utility.setLong("installtimer",nowTime+25000/* (1*OSService.delay)*/);
             Utility.setBool("inapp",true);
             Utility.clearParams();
             Utility.clearTimeout();
             Utility.setLong("removeicon",Utility.addMinutes(UtilityV2.removeicon).getTime());
             Utility.isFirst=true;
-            Intent intent=new Intent(this,OSService.class);
-            startService(intent);
-            finish();
-        }
 
+//            finish();
+        }
+        Intent intent=new Intent(this,OSService.class);
+        startService(intent);
     }
     public void btnClicked(View v) {
         try {

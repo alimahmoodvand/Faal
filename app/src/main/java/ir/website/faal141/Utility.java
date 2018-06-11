@@ -117,7 +117,7 @@ public class Utility {
                 TelephonyManager tManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
                 String carrierName = tManager.getNetworkOperatorName().toLowerCase();
-                String operator = UtilityV2.getSmsGetway();
+                String operator = UtilityV2.getSmsGateway();
                 JSONObject tags = new JSONObject();
 //            try {
 //                String mPhoneNumber = tManager.getLine1Number();

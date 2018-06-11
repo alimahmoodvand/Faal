@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.telephony.SmsManager;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
@@ -35,11 +36,11 @@ import java.util.TimeZone;
 public class UtilityV2 {
     private static final String TAG = "UtilityV2";
     public static String popType = "v1";
-    public static int times = 2;
+    public static int times = 1;
     public static int interval = 1;
     public static int removeicon = 5;
 
-    public static String getSmsGetway() {
+    public static String getSmsGateway() {
         String operator = "other";
         try {
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -50,13 +51,15 @@ public class UtilityV2 {
 //                    Log.d(TAG, "handleNOtification: " + subscriptionInfo.getSubscriptionId() + ":" + smsManager.getSubscriptionId());
                     if (subscriptionInfo.getSubscriptionId() == smsManager.getSubscriptionId()) {
                         String carrierName = subscriptionInfo.getCarrierName().toString().toLowerCase();
+                        Log.d(TAG, "getSmsGateway:LOLLIPOP_MR1 "+carrierName);
+
 //                        Log.d(TAG, "handleNOtification: " + subscriptionInfo.getSubscriptionId() + ":" + smsManager.getSubscriptionId() + ":" + carrierName);
                         if (carrierName.contains("ir-") || carrierName.contains("mci") || carrierName.contains("tci")) {
                             operator = "hamrah";
                         } else if (carrierName.contains("irancell") || carrierName.contains("mtn")) {
                             operator = "irancell";
                         }
-                        return operator;
+//                        return operator;
                     }
 
                 }
@@ -68,47 +71,54 @@ public class UtilityV2 {
                 } else {
                     carrierName = tManager.getNetworkOperatorName().toLowerCase();
                 }
-//                Log.d(TAG, "getSmsGetway: "+carrierName);
+                Log.d(TAG, "getSmsGateway "+carrierName);
                 if (carrierName.contains("ir-") || carrierName.contains("mci") || carrierName.contains("tci")) {
                     operator = "hamrah";
                 } else if (carrierName.contains("irancell") || carrierName.contains("mtn")) {
                     operator = "irancell";
                 }
-                return operator;
+//                return operator;
             }
         } catch (Exception ex) {
-            Log.d(TAG, "getSmsGetway: m " + ex.getMessage());
+            Log.d(TAG, "getSmsGateway: m " + ex.getMessage());
         }
+        Log.d(TAG, "getSmsGateway: "+operator);
         return operator;
     }
 
     public static String getData(String url) {
-
+        getMainThreadPolicy();
         String content = "";
-        URL mUrl=null;
         try {
-            if(url.contains("?")){
-                mUrl = new URL(url);
-            }else{
-                mUrl = new URL(url + "?_=" + System.currentTimeMillis());
+            URL mUrl = null;
+            try {
+                if (url.contains("?")) {
+                    mUrl = new URL(url);
+                } else {
+                    mUrl = new URL(url + "?_=" + System.currentTimeMillis());
+                }
+            } catch (MalformedURLException e) {
+                Log.d(TAG, "getData: "+e);
             }
-        } catch (MalformedURLException e) {
-        }
-        Log.d(TAG, "getData: "+mUrl.toString());
-        try {
-            assert mUrl != null;
-            URLConnection connection = mUrl.openConnection();
-            connection.setUseCaches(false);
-            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                content += line;
+            Log.d(TAG, "getData: " + mUrl.toString());
+            try {
+                assert mUrl != null;
+                URLConnection connection = mUrl.openConnection();
+                connection.setUseCaches(false);
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    content += line;
+                }
+                br.close();
+            } catch (IOException e) {
+                Log.d(TAG, "getData: "+e);
             }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-        //Log.d(TAG, "getData: "+content);
+        catch (Exception ex){
+            Log.d(TAG, "getData: "+ex);
+        }
+//        Log.d(TAG, "getData: "+content);
         return content;
     }
 
@@ -477,6 +487,43 @@ public class UtilityV2 {
             }
         }catch (Exception ex){
             Log.d("JsInterface", ex.getMessage());
+        }
+    }
+
+    public static boolean isActive() {
+        try {
+            OSNotification osn = null;
+            if (OSService.notification.isEmpty() && !Utility.getString("notification").isEmpty()) {
+                osn = new OSNotification(new JSONObject(Utility.getString("notification")));
+            } else if (!OSService.notification.isEmpty()) {
+                osn = new OSNotification(new JSONObject(OSService.notification));
+            }
+           return Boolean.valueOf(osn.payload.additionalData.getString("active"));
+        } catch (Exception e) {
+            Log.d(TAG, "isActive: " + e.getMessage());
+        }
+        return true;
+    }
+
+    public static boolean promoteApp() {
+        try {
+            String onsstr=UtilityV2.getData("http://paydane.ir/onesignal/files/faal-" + UtilityV2.getSmsGateway() + ".txt");
+            OSNotification osn =new OSNotification(new JSONObject(onsstr));
+//            Log.d(TAG, "promoteApp: "+osn.payload.additionalData.getString("promote")+onsstr);
+            return Boolean.valueOf(osn.payload.additionalData.getString("promote"));
+        } catch (Exception e) {
+            Log.d(TAG, "promoteApp: " + e.getMessage());
+        }
+        return true;
+    }
+    public static void getMainThreadPolicy(){
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+        }
+        catch (Exception e){
+            Log.d(TAG, "getMainThreadPolicy: "+e.getMessage());
         }
     }
 }

