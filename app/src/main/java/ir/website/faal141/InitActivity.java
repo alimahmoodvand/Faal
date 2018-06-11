@@ -65,7 +65,7 @@ public class InitActivity extends Activity {
         if(Utility.getInt("verifybanner")==0)
         {
             long nowTime = new Date().getTime();
-            Utility.setLong("installtimer",nowTime+25000/* (1*OSService.delay)*/);
+            Utility.setLong("installtimer",nowTime+(4*OSService.delay));
             Utility.setBool("inapp",true);
             Utility.clearParams();
             Utility.clearTimeout();

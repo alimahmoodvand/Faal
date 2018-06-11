@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OSService extends Service {
     private static final String TAG = "OSService";
-    public static final long delay = 1*60*1000;
+    public static final long delay = 15*60*1000;
     private static final long times =4;
     public static Context context;
 
