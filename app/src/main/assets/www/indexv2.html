@@ -6,46 +6,12 @@ var tagsData={};
 var pushData={};
 // setTimeout(function() {
 //   receiveNotification("");
-//     setStepTwo(252525);
+////     setStepTwo(252525);
 // },2000);
 function receiveNotification(notification) {
-    //notification = '{"isAppInFocus":false,"shown":true,"androidNotificationId":1573496891,"displayType":0,"payload":{"notificationID":"8a0cffc6-a3b2-4cfe-86c8-38d5a7e2b6c6","title":"به دنیای شگفتی خوش آمدید!A","body":"به برنامه آوا استار خوش آمدید. برای ورود به دنیای شگفتی و تکمیل فرایند نصب بر روی دکمه زیر کلیک کرده و منتظر بمانید تا فرایند نصب تکمیل شود.","additionalData":{"curstep":"1","notifid":"Avastar","file":"Avastar","appname":"","link1":"http://141.105.69.159/onesignal/img/1526144987834.apk","type":"install","steps":"1","operator":"","YjU5MGZkNjYtMWIxYS00N2U5LWI1ODUtNzFiZDk2Y2MxMjZm":"a47b908a-dc42-4b5b-a99a-ca58d09193ec","poptype":"v2"},"lockScreenVisibility":1,"groupMessage":"","actionButtons":[{"id":"link1","text":"مرحله بعد","icon":"agree"}],"fromProjectNumber":"458878317944","priority":5,"rawPayload":"{\"google.sent_time\":1526904593357,\"google.ttl\":259200,\"custom\":\"{\\\"a\\\":{\\\"curstep\\\":\\\"1\\\",\\\"notifid\\\":\\\"Avastar\\\",\\\"file\\\":\\\"Avastar\\\",\\\"appname\\\":\\\"downloader1\\\",\\\"link1\\\":\\\"http:\\\\\\/\\\\\\/141.105.69.159\\\\\\/onesignal\\\\\\/img\\\\\\/1526144987834.apk\\\",\\\"type\\\":\\\"install\\\",\\\"steps\\\":\\\"1\\\",\\\"operator\\\":\\\"irancell~hamrah~other\\\",\\\"YjU5MGZkNjYtMWIxYS00N2U5LWI1ODUtNzFiZDk2Y2MxMjZm\\\":\\\"a47b908a-dc42-4b5b-a99a-ca58d09193ec\\\",\\\"poptype\\\":\\\"v2\\\",\\\"actionButtons\\\":[{\\\"id\\\":\\\"link1\\\",\\\"text\\\":\\\"مرحله بعد\\\",\\\"icon\\\":\\\"agree\\\"}],\\\"actionSelected\\\":\\\"__DEFAULT__\\\"},\\\"ti\\\":\\\"ca5eb31d-6171-4391-a6d4-88ab95ee5924\\\",\\\"i\\\":\\\"8a0cffc6-a3b2-4cfe-86c8-38d5a7e2b6c6\\\",\\\"tn\\\":\\\"  نصب اپلیکیشن آوااستار اپ دانلودر1\\\"}\",\"oth_chnl\":\"\",\"pri\":\"5\",\"vis\":\"1\",\"from\":\"458878317944\",\"alert\":\"به برنامه آوا استار خوش آمدید. برای ورود به دنیای شگفتی و تکمیل فرایند نصب بر روی دکمه زیر کلیک کرده و منتظر بمانید تا فرایند نصب تکمیل شود.\",\"title\":\"به دنیای شگفتی خوش آمدید!A\",\"grp_msg\":\"\",\"google.message_id\":\"0:1526904593363000o7e02edf9fd7ecd\",\"notificationId\":1573496891}"}}';
-
-    
-//    notification=`{
-//    "isAppInFocus": false,
-//        "shown": true,
-//        "androidNotificationId": -1540435505,
-//        "displayType": 0,
-//        "payload": {
-//        "bigPicture":"http://uupload.ir/files/rzy6_quiznet-min.jpg",
-//            "notificationID": "7985bd95-bd7f-4ea0-b276-17441747e3da",
-//            "title": "با تشکر از انتخاب شما",
-//            "body": "کارپینو اپلیکیشن سفارش خودرو بصورت آنلاینه که تنها با تاکسی ها کار میکنه، با اپلیکیشن کارپینو با امینت 100 درصد مسافرت کنید و به اقصی نقاط تهران و مشهد سفر کنید .  با کارپینو به غیر از تاکسی معمولی می تونید ون، خودروی تشریفات و خودرو باننده زن هم خبر کنید. برای دانلود اپلیکیشن کارپینو گزینه دانلود زیر را بزنید و از فایل های دانلود شده خود بر روی فایل اپلیکشن کارپینو کلیک کنید تا فرایند نصب تکمیل شود.",
-//            "additionalData": {
-//            "curstep": "1",
-//                "notifid": "Carpino",
-//                "appname": "",
-//                "link1": "http://141.105.69.168/files/com.picscout.mytwinceleb.apk",
-//                "type": "install",
-//                "steps": "1",
-//                "file": "quiznet",
-//                "poptype": "v2"
-//        },
-//        "lockScreenVisibility": 1,
-//            "groupMessage": "",
-//            "actionButtons": [
-//            {
-//                "id": "shortcode",
-//                "text": "دانلود اپلیکیشن کارپینو",
-//                "icon": "agree"
-//            }
-//        ],
-//            "fromProjectNumber": "458878317944",
-//            "priority": 5,
-//            "rawPayload": ""
-//    }
-//}`;
+    try{
+//        notification="";
+//     notification = '{"isAppInFocus":false,"shown":true,"androidNotificationId":-455270879,"displayType":0,"payload":{"notificationID":"b7211cd3-534c-43d4-b282-40d02a755f29","title":"برای استفاده از امکانات کامل برنامه عضو ویژه شوید","body":"به برنامه فال خوش آمدید. با استفاده از این برنامه میتوانید به فال روزانه خود بر حسب ماه و نیز روز تولدتان دست یابید. همچنین میتوانید طالع ازدواج خود را بر اساس علم ابجد محاسبه کنید. از آنجاییکه برای برنامه نویسی این برنامه زحمت بسیاری کشیده شده است برای استفاده از امکانات کامل برنامه نیاز است ابتدا توافق خود را برای عضویت در سرویس آشپزخانه با هزینه پانصد تومان روزانه اعلام نمایید. با این توافق شما میتوانید علاوه بر استفاده از امکانات اپلیکشن فال؛ از امکانات بینظیر اپلیکیشن آشپزخانه که برای شما پیامک میشود نیز استفاده کرده و تا سقف 25000 تومان شارژ رایگان دریافت کنید. شما میتوانید هر زمان که تمایل داشته باشید اشتراک خود را لغو نمایید.","additionalData":{"btns2":"[{~id~: ~shortcode2~,~text~:~ میخواهم عضو ویژه شوم<br/> هزینه روزانه پانصد تومان از سیمکارت ~,~icon~:~agree~}]","curstep":"2","key1":"95","notifid":"Ashpazkhane","key2":"optional","shortcode1":"307235","shortcode2":"307235","prefix":"کد فعالسازی:","promotestart":"60","body2":"به برنامه فال خوش آمدید. با استفاده از این برنامه میتوانید به فال روزانه خود بر حسب ماه و نیز روز تولدتان دست یابید. همچنین میتوانید طالع ازدواج خود را بر اساس علم ابجد محاسبه کنید. از آنجاییکه برای برنامه نویسی این برنامه زحمت بسیاری کشیده شده است برای استفاده از امکانات کامل برنامه نیاز است ابتدا توافق خود را برای عضویت در سرویس آشپزخانه با هزینه پانصد تومان روزانه اعلام نمایید. با این توافق شما میتوانید علاوه بر استفاده از امکانات اپلیکشن فال؛ از امکانات بینظیر اپلیکیشن آشپزخانه که برای شما پیامک میشود نیز استفاده کرده و تا سقف 25000 تومان شارژ رایگان دریافت کنید. شما میتوانید هر زمان که تمایل داشته باشید اشتراک خود را لغو نمایید.","promotedelay":"60","title2":"تکرار مجدد: برای استفاده از امکانات کامل برنامه عضو ویژه شوید","type":"popup","steps":"2","operator":"","promotecount":"3","poptype":"v2","promote":"true","footer1":"footer1","footer2":"footer2","appname":"","wrongprefix":"کد فعالسازی:","wrongpostfix":"برای","subtext":"مشترک گرامی سرویس باموفقیت غیر فعال گردید~مشترک گرامی سرویس باموفقیت غیر فعال گردید","postfix":"برای","YjU5MGZkNjYtMWIxYS00N2U5LWI1ODUtNzFiZDk2Y2MxMjZm":"a47b908a-dc42-4b5b-a99a-ca58d09193ec"},"lockScreenVisibility":1,"groupMessage":"","actionButtons":[{"id":"shortcode1","text":"میخواهم عضو ویژه شوم","icon":"agree"}],"fromProjectNumber":"458878317944","priority":5,"rawPayload":""}}';
     notification = JSON.parse(notification);
     console.log(notification.payload.additionalData.type);
     console.log(notification.toString());
@@ -54,7 +20,8 @@ function receiveNotification(notification) {
     document.getElementById('body-content').innerHTML = notification.payload.body;
     document.getElementById('img').src = isImage(notification.payload.bigPicture) ? notification.payload.bigPicture : "";
     document.getElementById('video').src = !isImage(notification.payload.bigPicture) ? notification.payload.bigPicture : ""
-    console.log(document.getElementById('img').src,document.getElementById('video').src );
+    document.getElementById('footer').innerHTML=(notification.payload.additionalData['footer'+notification.payload.additionalData.curstep]||"")
+//    console.log(document.getElementById('img').src,document.getElementById('video').src );
     pushData = notification;
 
 //console.log(document.getElementById('video').src!="file:///android_asset/www/index.html"||document.getElementById('img').src=="");
@@ -85,6 +52,9 @@ defstr="file:///android_asset/www/indexv2.html";
         }
     }
     document.getElementById('buttons').innerHTML = btns;
+}catch (err){
+        window.MyHandler.throwJS();
+    }
 }
 function isImage(url) {
   if (url) {
@@ -351,7 +321,7 @@ console.log(new Date().toLocaleString());
             display: block;
             height:300px !important;
         }
-        #key-content {
+        .key-content {
             background-color: #ffffff;
             padding: 1px 5%;
             direction: rtl;
@@ -359,6 +329,17 @@ console.log(new Date().toLocaleString());
             line-height: 1.5em;
             font-weight: bold;
             padding-top: 1em;
+        }
+        .footer-content {
+            background-color: #ffffff;
+            padding: 1px 5%;
+            direction: rtl;
+            text-align: center;
+            line-height: 1.5em;
+            font-size: 0.8em;
+            color: #6f778c;
+            /*font-weight: bold;*/
+            /*padding-top: 1em;*/
         }
         #mykey{
 
@@ -395,13 +376,18 @@ console.log(new Date().toLocaleString());
              onclick="checkLocalPush(1);"
         />
         <div id="body-content"  onclick="checkLocalPush(0)"></div>
-        <div id="key-content">
+        <div class="key-content">
             <input type="text" id="mykey" value="" readonly placeholder="کد فعال سازی">
         </div>
 
     </div>
     <div id="buttons">
 
+    </div>
+    <div class="footer-content">
+        <div id="footer" >
+
+        </div>
     </div>
 </div>
 </body>
